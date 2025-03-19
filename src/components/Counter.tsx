@@ -12,17 +12,14 @@ class Counter extends Component<ICounterProps, ICounterState> {
   constructor(props: { initValue: number }) {
     super(props);
 
-    // Initialize state
     this.state = {
       count: props.initValue,
     };
 
-    // Bind the changeGreeting method to this instance
     this.incrementCount = this.incrementCount.bind(this);
     this.decrementCount = this.decrementCount.bind(this);
   }
 
-  // Methods to change count
   incrementCount() {
     this.setState((prevState) => ({ count: prevState.count + 1 }));
   }
@@ -33,21 +30,21 @@ class Counter extends Component<ICounterProps, ICounterState> {
 
   render() {
     return React.createElement(
-      'div', // Parent container element
-      { className: 'greeting-component' }, // Props for the container element
+      'div',
+      { className: 'greeting-component' },
       React.createElement(
-        'div', // Header element
+        'div',
         {
           style: {
             marginBottom: '.5rem',
             fontSize: '2rem',
             color: '#F65261',
           }
-        }, // No props for the header element
-        this.state.count // Content of the header (state-based)
+        },
+        this.state.count
       ),
       React.createElement(
-        'button', // Button element
+        'button',
         {
           style: {
             background: 'none',
@@ -55,19 +52,19 @@ class Counter extends Component<ICounterProps, ICounterState> {
             color: '#F65261',
             marginRight: '.5rem',
           },
-          onClick: this.incrementCount, // Callback for the button click
+          onClick: this.incrementCount,
         },
         '+1'
       ),
       React.createElement(
-        'button', // Button element
+        'button',
         {
           style: {
             background: 'none',
             border: '1px solid #F65261',
             color: '#F65261',
           },
-          onClick: this.decrementCount, // Callback for the button click
+          onClick: this.decrementCount,
         },
         '-1'
       )
