@@ -1,33 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import Counter from './components/Counter.tsx'
+import SearchForm from './components/SearchForm.tsx'
+import GenreSelector from './components/GenreSelector.tsx'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const handleSearch = (query: string) => {
+    console.log('[handleSearch] query: ', query)
+  }
+
+  const genres = ['all', 'documentary', 'comedy', 'horror', 'crime']
+  const selectedGenre = 'all'
+  const handleGenreChange = (newGenre: string) => {
+    console.log('[handleGenreChange] newGenre: ', newGenre)
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>NetflixRoulette</h1>
+      <h2>Counter component</h2>
+      <Counter initValue={0}/>
+      <h2>Search form</h2>
+      <SearchForm initQuery={'react'} onSearch={handleSearch}/>
+      <h2>Genre selector</h2>
+      <GenreSelector genres={genres} selected={selectedGenre} onSelect={handleGenreChange}/>
     </>
   )
 }
