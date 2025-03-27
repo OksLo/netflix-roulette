@@ -6,10 +6,8 @@ describe('Counter Component', () => {
   const initValue = 5;
 
   it('should render the initial value provided in props', () => {
-    // Arrange: Render the component with an initial value of 5
     render(<Counter initValue={initValue}/>);
 
-    // Act & Assert: Check that the displayed count matches the initial value
     const countDisplay = screen.getByText(initValue);
     expect(countDisplay).toBeInTheDocument();
   });
