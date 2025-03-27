@@ -39,7 +39,8 @@ class Counter extends Component<ICounterProps, ICounterState> {
             marginBottom: '.5rem',
             fontSize: '2rem',
             color: '#F65261',
-          }
+          },
+          'data-testid': 'counter-value',
         },
         this.state.count
       ),
@@ -52,6 +53,7 @@ class Counter extends Component<ICounterProps, ICounterState> {
             color: '#F65261',
             marginRight: '.5rem',
           },
+          'data-testid': 'counter-btn-increment',
           onClick: this.incrementCount,
         },
         '+1'
@@ -64,6 +66,7 @@ class Counter extends Component<ICounterProps, ICounterState> {
             border: '1px solid #F65261',
             color: '#F65261',
           },
+          'data-testid': 'counter-btn-decrement',
           onClick: this.decrementCount,
         },
         '-1'
