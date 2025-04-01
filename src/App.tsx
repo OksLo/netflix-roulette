@@ -1,7 +1,19 @@
 import Counter from './components/Counter.tsx'
 import SearchForm from './components/SearchForm.tsx'
 import GenreSelector from './components/GenreSelector.tsx'
+import MovieTile from './components/MovieTile.tsx'
 import './App.css'
+
+import { IMovie } from './models/Movie'
+
+const moviesMock: IMovie[] = [
+    {
+        name: 'Reservoir dogs',
+        imageUrl: 'https://m.media-amazon.com/images/M/MV5BYjg4MmU3NWYtMWE5ZC00ZmNmLWIyZjItMGU4NmYxMjdmNzQ1XkEyXkFqcGc@._V1_.jpg',
+        releaseYear: '1992',
+        relevantGenres: ['Oscar winning Movie']
+    }
+]
 
 function App() {
   const handleSearch = (query: string) => {
@@ -23,6 +35,8 @@ function App() {
       <SearchForm initQuery={'react'} onSearch={handleSearch}/>
       <h2>Genre selector</h2>
       <GenreSelector genres={genres} selected={selectedGenre} onSelect={handleGenreChange}/>
+      <h2>Movie tile</h2>
+      <div style={{width: "300px"}}><MovieTile movie={moviesMock[0]}/></div>
     </>
   )
 }
