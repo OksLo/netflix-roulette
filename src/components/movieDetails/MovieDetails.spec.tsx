@@ -2,9 +2,8 @@ import { render, screen } from '@testing-library/react';
 
 import MovieDetails from './MovieDetails.tsx';
 
-import { moviesMock } from "src/mocks";
-
 import { getDurationFromMinutes } from 'src/utils/time';
+import { moviesMock } from "src/mocks";
 
 jest.mock('src/utils/time', () => ({
   getDurationFromMinutes: jest.fn(),

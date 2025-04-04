@@ -1,8 +1,7 @@
 import { type FC, useState } from 'react';
 import styles from './MovieTile.module.scss';
 
-import { IMovie } from '../../models/Movie.ts'
-
+import { IMovie } from 'src/models/Movie.ts'
 
 interface IMovieTileProps {
     movie: IMovie;

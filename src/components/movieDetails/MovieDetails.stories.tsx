@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import MovieDetails from './MovieDetails.tsx';
 
-import { moviesMock } from "../../mocks";
+import { moviesMock } from "src/mocks";
 
 const meta = {
   component: MovieDetails,

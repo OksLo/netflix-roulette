@@ -3,8 +3,7 @@ import userEvent from '@testing-library/user-event';
 
 import SortControl from './SortControl.tsx';
 
-import { IOption } from '../../models/Controls.ts'
-
+import { IOption } from 'src/models/Controls.ts'
 import { sortOptionsMock } from "src/mocks";
 
 describe('SortControl Component', () => {

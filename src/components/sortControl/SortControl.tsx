@@ -1,7 +1,7 @@
 import { type FC, ChangeEvent } from 'react';
 import styles from './SortControl.module.scss';
 
-import { IOption } from '../../models/Controls.ts'
+import { IOption } from 'src/models/Controls.ts'
 
 interface ISortControlProps {
     options: IOption[];

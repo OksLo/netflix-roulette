@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import MovieTile from './MovieTile.tsx';
 
-import { moviesMock } from "../../mocks";
+import { moviesMock } from "src/mocks";
 
 const meta = {
   component: MovieTile,
