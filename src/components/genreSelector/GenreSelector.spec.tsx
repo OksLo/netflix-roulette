@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import GenreSelector from 'src/components/GenreSelector';
+import GenreSelector from 'src/components/genreSelector/GenreSelector.tsx';
 import userEvent from '@testing-library/user-event';
 
 describe('GenreSelector Component', () => {

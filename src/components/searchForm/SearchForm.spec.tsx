@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import SearchForm from 'src/components/SearchForm';
+import SearchForm from 'src/components/searchForm/SearchForm.tsx';
 import userEvent from '@testing-library/user-event';
 
 describe('SearchForm Component', () => {

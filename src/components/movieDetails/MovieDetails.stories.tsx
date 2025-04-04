@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import MovieTile from './MovieTile';
+import MovieDetails from './MovieDetails.tsx';
 
-import { moviesMock } from "../mocks";
+import { moviesMock } from "../../mocks";
 
 const meta = {
-  component: MovieTile,
-} satisfies Meta<typeof MovieTile>;
+  component: MovieDetails,
+} satisfies Meta<typeof MovieDetails>;
 
 export default meta;
 

@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import Counter from './components/Counter.tsx'
-import SearchForm from './components/SearchForm.tsx'
-import GenreSelector from './components/GenreSelector.tsx'
-import MovieTile from './components/MovieTile.tsx'
-import MovieDetails from './components/MovieDetails.tsx'
-import SortControl from './components/SortControl.tsx'
+import Counter from './components/counter/Counter.tsx'
+import SearchForm from './components/searchForm/SearchForm.tsx'
+import GenreSelector from './components/genreSelector/GenreSelector.tsx'
+import MovieTile from './components/movieTile/MovieTile.tsx'
+import MovieDetails from './components/movieDetails/MovieDetails.tsx'
+import SortControl from './components/sortControl/SortControl.tsx'
 import './App.css'
 
 // mocks

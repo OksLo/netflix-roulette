@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import SortControl from './SortControl';
+import SortControl from './SortControl.tsx';
 
-import { sortOptionsMock } from "../mocks";
+import { sortOptionsMock } from "../../mocks";
 
 const meta = {
   component: SortControl,

@@ -1,10 +1,9 @@
 import { type FC } from 'react';
 import styles from './MovieDetails.module.scss';
 
-import { getDurationFromMinutes } from '../utils/time'
+import { getDurationFromMinutes } from '../../utils/time.ts'
 
-import { IMovie } from '../models/Movie'
-
+import { IMovie } from '../../models/Movie.ts'
 
 interface IMovieDetailsProps {
     movie: IMovie;

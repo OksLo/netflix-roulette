@@ -1,7 +1,7 @@
 import { type FC, useState } from 'react';
 import styles from './MovieTile.module.scss';
 
-import { IMovie } from '../models/Movie'
+import { IMovie } from '../../models/Movie.ts'
 
 
 interface IMovieTileProps {
@@ -24,8 +24,12 @@ const MovieTile: FC<IMovieTileProps> = ({ movie: { name, imageUrl, relevantGenre
                 <span className={styles['movie-tile__year']}>{releaseYear}</span>
             </figcaption>
             <div className={styles['movie-tile__actions']}>
-                <button className={styles['movie-tile__actions-btn']} onClick={() => handleMenuToggle(true)}>⋮</button>
-                {isMenuOpen && <menu className={styles['movie-tile__actions-menu']}>
+                <button
+                    className={styles['movie-tile__actions-btn']}
+                    onClick={() => handleMenuToggle(true)}
+                    data-testid="movie-tile-menu-btn"
+                >⋮</button>
+                {isMenuOpen && <menu className={styles['movie-tile__actions-menu']} data-testid="movie-tile-menu">
                     <li onClick={() => handleMenuToggle(false)}>✕</li>
                     <li>Edit</li>
                     <li>Delete</li>

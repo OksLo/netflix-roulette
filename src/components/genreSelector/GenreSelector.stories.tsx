@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import GenreSelector from './GenreSelector';
+import GenreSelector from './GenreSelector.tsx';
 
 const meta = {
   component: GenreSelector,

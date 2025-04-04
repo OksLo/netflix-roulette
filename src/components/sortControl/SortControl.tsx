@@ -1,7 +1,7 @@
 import { type FC, ChangeEvent } from 'react';
 import styles from './SortControl.module.scss';
 
-import { IOption } from '../models/Controls'
+import { IOption } from '../../models/Controls.ts'
 
 interface ISortControlProps {
     options: IOption[];
@@ -22,6 +22,7 @@ const SortControl: FC<ISortControlProps> = ({ options, selectedOption, onChange 
                 value={selectedOption}
                 className={styles['sort-control__select']}
                 onChange={handleSortOptionChange}
+                data-testid="sort-control-select"
             >
                 {options.map((option) => (
                     <option key={option.value} value={option.value}>{option.label}</option>

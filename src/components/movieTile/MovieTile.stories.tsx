@@ -1,10 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Counter from './Counter';
+import MovieTile from './MovieTile.tsx';
+
+import { moviesMock } from "../../mocks";
 
 const meta = {
-  component: Counter,
-} satisfies Meta<typeof Counter>;
+  component: MovieTile,
+} satisfies Meta<typeof MovieTile>;
 
 export default meta;
 
@@ -12,6 +14,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    initValue: 0
+    movie: moviesMock[0]
   }
 };
