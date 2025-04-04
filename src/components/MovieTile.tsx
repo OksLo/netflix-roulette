@@ -1,5 +1,5 @@
 import { type FC, useState } from 'react';
-import styles from './movietile.module.scss';
+import styles from './MovieTile.module.scss';
 
 import { IMovie } from '../models/Movie'
 
@@ -8,7 +8,7 @@ interface IMovieTileProps {
     movie: IMovie;
 }
 
-const MovieTile: FC<IMovieTileProps> = ({ movie }) => {
+const MovieTile: FC<IMovieTileProps> = ({ movie: { name, imageUrl, relevantGenres, releaseYear } }) => {
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
 
     const handleMenuToggle = (isOpen: boolean = !isMenuOpen) => {
@@ -17,11 +17,11 @@ const MovieTile: FC<IMovieTileProps> = ({ movie }) => {
 
     return (
         <figure className={styles['movie-tile']}>
-            <img src={movie.imageUrl} alt={movie.name} className={styles['movie-tile__img']}/>
+            <img src={imageUrl} alt={name} className={styles['movie-tile__img']}/>
             <figcaption className={styles['movie-tile__caption']}>
-                <span className={styles['movie-tile__name']}>{ movie.name }</span>
-                <span className={styles['movie-tile__genres']}>{movie.relevantGenres.join(',')}</span>
-                <span className={styles['movie-tile__year']}>{movie.releaseYear}</span>
+                <span className={styles['movie-tile__name']}>{ name }</span>
+                {relevantGenres && <span className={styles['movie-tile__genres']}>{relevantGenres.join(',')}</span>}
+                <span className={styles['movie-tile__year']}>{releaseYear}</span>
             </figcaption>
             <div className={styles['movie-tile__actions']}>
                 <button className={styles['movie-tile__actions-btn']} onClick={() => handleMenuToggle(true)}>⋮</button>

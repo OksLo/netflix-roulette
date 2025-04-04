@@ -1,5 +1,5 @@
 import { type FC, type ChangeEvent, type FormEvent, useState } from 'react';
-import styles from './searchform.module.scss';
+import styles from './SearchForm.module.scss';
 
 interface ISearchFormProps {
   initQuery?: string;

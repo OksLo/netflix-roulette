@@ -3,4 +3,6 @@ export interface IMovie {
     imageUrl: string;
     releaseYear: string;
     relevantGenres: string[];
+    duration: number;
+    description: string;
 }

@@ -1,19 +1,16 @@
+import { useState } from 'react';
 import Counter from './components/Counter.tsx'
 import SearchForm from './components/SearchForm.tsx'
 import GenreSelector from './components/GenreSelector.tsx'
 import MovieTile from './components/MovieTile.tsx'
+import MovieDetails from './components/MovieDetails.tsx'
+import SortControl from './components/SortControl.tsx'
 import './App.css'
 
-import { IMovie } from './models/Movie'
+// mocks
+import { moviesMock, sortOptionsMock } from './mocks/'
 
-const moviesMock: IMovie[] = [
-    {
-        name: 'Reservoir dogs',
-        imageUrl: 'https://m.media-amazon.com/images/M/MV5BYjg4MmU3NWYtMWE5ZC00ZmNmLWIyZjItMGU4NmYxMjdmNzQ1XkEyXkFqcGc@._V1_.jpg',
-        releaseYear: '1992',
-        relevantGenres: ['Oscar winning Movie']
-    }
-]
+
 
 function App() {
   const handleSearch = (query: string) => {
@@ -24,6 +21,12 @@ function App() {
   const selectedGenre = 'all'
   const handleGenreChange = (newGenre: string) => {
     console.log('[handleGenreChange] newGenre: ', newGenre)
+  }
+
+  const [sortBy, setSortBy] = useState<string>(sortOptionsMock[0].value);
+  const handleSortChange = (newSortOption: string) => {
+    console.log('[handleSortChange] newSortOption: ', newSortOption)
+    setSortBy(newSortOption)
   }
 
   return (
@@ -37,6 +40,10 @@ function App() {
       <GenreSelector genres={genres} selected={selectedGenre} onSelect={handleGenreChange}/>
       <h2>Movie tile</h2>
       <div style={{width: "300px"}}><MovieTile movie={moviesMock[0]}/></div>
+      <h2>Movie details</h2>
+      <MovieDetails movie={moviesMock[0]}/>
+      <h2>Sort control</h2>
+      <div><SortControl options={sortOptionsMock} selectedOption={sortBy} onChange={handleSortChange}/></div>
     </>
   )
 }

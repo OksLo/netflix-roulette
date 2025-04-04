@@ -1,5 +1,5 @@
 import { type FC, useState } from 'react';
-import styles from './genreselector.module.scss';
+import styles from './GenreSelector.module.scss';
 
 interface IGenreSelectorProps {
   genres: string[];
