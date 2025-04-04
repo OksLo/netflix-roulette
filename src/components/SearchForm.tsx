@@ -32,8 +32,15 @@ const SearchForm: FC<ISearchFormProps> = ({ initQuery = '', onSearch }) => {
         onChange={handleInputChange}
         onFocus={handleSearchSubmit}
         className={styles['search-form__input']}
+        data-testid="search-form-input"
       />
-      <button type="submit" className={styles['search-form__btn']}>search</button>
+      <button
+        type="submit"
+        className={styles['search-form__btn']}
+        data-testid="search-form-button"
+      >
+        search
+      </button>
     </form>
   )
 };
