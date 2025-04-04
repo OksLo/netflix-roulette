@@ -20,6 +20,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+* {
+  padding: 0;
+  margin: 0;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -45,7 +50,7 @@ button {
   border-radius: 4px;
   padding: 0.6em 1.2em;
   border: 0;
-  background-color: var(--color-pink);
+  background-color: var(--btn-bg-color, var(--color-pink));
   font: 500 1em inherit;
   color: var(--color-white);
   cursor: pointer;

@@ -1,0 +1,41 @@
+.movie-details {
+  display: grid;
+  grid-template-columns: 30% 65%;
+  gap: 5%;
+  text-align: left;
+  font-weight: 300;
+
+  &__img {
+    max-width: 100%;
+    flex: 0 0 30%;
+  }
+
+  &__info {
+    flex: 0 0 70%;
+  }
+
+  &__name {
+    font-size: 2.5em;
+    font-weight: 300;
+  }
+
+  &__genres {
+    margin-bottom: 30px;
+    font-size: .9em;
+    font-weight: 500;
+    opacity: 50%;
+  }
+
+  &__details {
+    margin-bottom: 30px;
+    display: flex;
+    gap: 50px;
+    font-size: 1.5em;
+    color: var(--color-pink);
+  }
+
+  &__description {
+    font-size: 1.2em;
+    opacity: 50%;
+  }
+}

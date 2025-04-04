@@ -1,6 +1,7 @@
 import { render } from '@testing-library/react';
-import GenreSelector from 'src/components/GenreSelector';
 import userEvent from '@testing-library/user-event';
+
+import GenreSelector from './GenreSelector.tsx';
 
 describe('GenreSelector Component', () => {
   const genresMock = ['Action', 'Drama', 'Comedy', 'Horror'];

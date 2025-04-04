@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
-import Counter from 'src/components/Counter';
+import Counter from 'src/components/counter/Counter.tsx';
 
 describe('Counter Component', () => {
   const initValue = 5;
