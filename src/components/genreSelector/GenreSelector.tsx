@@ -1,15 +1,15 @@
 import { type FC, useState } from 'react';
-import styles from './genreselector.module.scss';
+import styles from './GenreSelector.module.scss';
 
 interface IGenreSelectorProps {
   genres: string[];
-  selected: string;
+  selected?: string;
   onSelect: (genre: string) => void;
 }
 
 const GenreSelector: FC<IGenreSelectorProps> = ({ genres, selected, onSelect }) => {
 
-  const [selectedGenre, setSelectedGenre] = useState<string>(selected);
+  const [selectedGenre, setSelectedGenre] = useState<string>(selected || genres[0]);
 
   const handleGenreChange = (newGenreName: string) => {
     if (newGenreName) {

@@ -1,6 +1,7 @@
 import { render } from '@testing-library/react';
-import SearchForm from 'src/components/SearchForm';
 import userEvent from '@testing-library/user-event';
+
+import SearchForm from './SearchForm.tsx';
 
 describe('SearchForm Component', () => {
   const initQuery = 'react'
