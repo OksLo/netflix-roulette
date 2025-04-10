@@ -1,0 +1,23 @@
+.input {
+  &__label {
+    display: block;
+    text-transform: uppercase;
+    font-size: 1em;
+    color: var(--color-pink);
+  }
+
+  &__control {
+    padding: .8em;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    border-radius: 4px;
+    background-color: var(--color-grey2);
+    font-size: 1.25em;
+    color: var(--color-white);
+
+    &::placeholder {
+      color: var(--color-grey3);
+    }
+  }
+}
