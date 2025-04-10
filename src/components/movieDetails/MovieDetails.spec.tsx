@@ -25,11 +25,11 @@ describe('MovieDetails Component', () => {
     );
 
     // Check movie name
-    const nameElement = screen.getByText(movieMock.name);
+    const nameElement = screen.getByText(movieMock.title);
     expect(nameElement).toBeInTheDocument();
 
     // Check movie image
-    const imageElement = screen.getByAltText(movieMock.name);
+    const imageElement = screen.getByAltText(movieMock.title);
     expect(imageElement).toBeInTheDocument();
     expect(imageElement).toHaveAttribute('src', movieMock.imageUrl);
 
@@ -38,8 +38,8 @@ describe('MovieDetails Component', () => {
     expect(genresElement).toBeInTheDocument();
 
     // Check release year
-    const releaseYearElement = screen.getByText(movieMock.releaseYear.toString());
-    expect(releaseYearElement).toBeInTheDocument();
+    const releaseDateElement = screen.getByText((new Date(movieMock.releaseDate)).getFullYear());
+    expect(releaseDateElement).toBeInTheDocument();
 
     // Check duration
     const durationElement = screen.getByText(mockDuration);
