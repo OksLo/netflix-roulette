@@ -1,0 +1,1 @@
+export const genresMock: string[] = ['all', 'documentary', 'comedy', 'horror', 'crime', 'Oscar winning Movie'];

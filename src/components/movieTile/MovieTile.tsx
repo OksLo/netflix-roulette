@@ -7,7 +7,7 @@ interface IMovieTileProps {
     movie: IMovie;
 }
 
-const MovieTile: FC<IMovieTileProps> = ({ movie: { name, imageUrl, relevantGenres, releaseYear } }) => {
+const MovieTile: FC<IMovieTileProps> = ({ movie: { title, imageUrl, relevantGenres, releaseDate } }) => {
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
 
     const handleMenuToggle = (isOpen: boolean = !isMenuOpen) => {
@@ -16,11 +16,11 @@ const MovieTile: FC<IMovieTileProps> = ({ movie: { name, imageUrl, relevantGenre
 
     return (
         <figure className={styles['movie-tile']}>
-            <img src={imageUrl} alt={name} className={styles['movie-tile__img']}/>
+            <img src={imageUrl} alt={title} className={styles['movie-tile__img']}/>
             <figcaption className={styles['movie-tile__caption']}>
-                <span className={styles['movie-tile__name']}>{ name }</span>
+                <span className={styles['movie-tile__name']}>{ title }</span>
                 {relevantGenres && <span className={styles['movie-tile__genres']}>{relevantGenres.join(',')}</span>}
-                <span className={styles['movie-tile__year']}>{releaseYear}</span>
+                <span className={styles['movie-tile__year']}>{(new Date(releaseDate)).getFullYear()}</span>
             </figcaption>
             <div className={styles['movie-tile__actions']}>
                 <button
