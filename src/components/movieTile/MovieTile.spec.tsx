@@ -1,9 +1,11 @@
-import { render, screen } from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import MovieTile from './MovieTile.tsx';
 
 import { moviesMock } from "src/mocks";
+
+jest.mock('src/assets/imagePlaceholder.png', () => 'image-placeholder');
 
 describe('MovieTile Component', () => {
   const movieMock = moviesMock[0];
@@ -18,17 +20,17 @@ describe('MovieTile Component', () => {
     expect(nameElement).toBeInTheDocument();
 
     // Check movie genres
-    const genresElement = screen.getByText(movieMock.relevantGenres.join(','));
+    const genresElement = screen.getByText(movieMock.genres.join(','));
     expect(genresElement).toBeInTheDocument();
 
     // Check release year
-    const releaseDateElement = screen.getByText((new Date(movieMock.releaseDate)).getFullYear());
+    const releaseDateElement = screen.getByText((new Date(movieMock.release_date)).getFullYear());
     expect(releaseDateElement).toBeInTheDocument();
 
     // Check movie image
     const imageElement = screen.getByAltText(movieMock.title);
     expect(imageElement).toBeInTheDocument();
-    expect(imageElement).toHaveAttribute('src', movieMock.imageUrl);
+    expect(imageElement).toHaveAttribute('src', movieMock.poster_path);
   });
 
 
@@ -46,5 +48,16 @@ describe('MovieTile Component', () => {
     // Menu should now appear
     const openedMenu = screen.getByTestId('movie-tile-menu');
     expect(openedMenu).toBeInTheDocument();
+  });
+
+  it('should display a placeholder image if the image fails to load', () => {
+    render(<MovieTile movie={ movieMock } />);
+
+    const imageElement = screen.getByAltText(movieMock.title) as HTMLImageElement;
+
+    fireEvent.error(imageElement);
+
+    // Check if the `src` tag was replaced by the placeholder
+    expect(imageElement.src).toContain('image-placeholder');
   });
 })

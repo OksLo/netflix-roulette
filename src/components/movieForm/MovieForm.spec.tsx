@@ -58,11 +58,11 @@ describe('MovieForm Component', () => {
         render(<MovieForm movie={mockMovie} onSubmit={mockOnSubmit} />);
 
         expect(screen.getByTestId('title')).toHaveValue(mockMovie.title);
-        expect(screen.getByTestId('releaseDate')).toHaveValue(mockMovie.releaseDate);
+        expect(screen.getByTestId('release_date')).toHaveValue(mockMovie.release_date);
         expect(screen.getByTestId('url')).toHaveValue(mockMovie.url);
-        expect(screen.getByTestId('rating')).toHaveValue(mockMovie.rating);
-        expect(screen.getByTestId('duration')).toHaveValue(mockMovie.duration);
-        expect(screen.getByTestId('description')).toHaveValue(mockMovie.description);
+        expect(screen.getByTestId('vote')).toHaveValue(mockMovie.vote);
+        expect(screen.getByTestId('runtime')).toHaveValue(mockMovie.runtime);
+        expect(screen.getByTestId('overview')).toHaveValue(mockMovie.overview);
     });
 
     it('calls handleMovieChange correctly when the user updates an input', async () => {
@@ -78,7 +78,7 @@ describe('MovieForm Component', () => {
     it('updates the genres when the user selects multiple options', async () => {
         render(<MovieForm movie={mockMovie} onSubmit={mockOnSubmit} />);
 
-        const genresSelect = screen.getByTestId('relevantGenres');
+        const genresSelect = screen.getByTestId('genres');
         await userEvent.selectOptions(genresSelect, [genresMock[0], genresMock[1]]);
 
         expect(screen.getByRole('option', { name: genresMock[0] }).selected).toBe(true);
@@ -119,12 +119,12 @@ describe('MovieForm Component', () => {
         render(<MovieForm movie={mockMovie} onSubmit={mockOnSubmit} />);
 
         expect(screen.getByTestId('title')).toBeInTheDocument();
-        expect(screen.getByTestId('releaseDate')).toBeInTheDocument();
+        expect(screen.getByTestId('release_date')).toBeInTheDocument();
         expect(screen.getByTestId('url')).toBeInTheDocument();
-        expect(screen.getByTestId('rating')).toBeInTheDocument();
-        expect(screen.getByTestId('duration')).toBeInTheDocument();
-        expect(screen.getByTestId('description')).toBeInTheDocument();
+        expect(screen.getByTestId('vote')).toBeInTheDocument();
+        expect(screen.getByTestId('runtime')).toBeInTheDocument();
+        expect(screen.getByTestId('overview')).toBeInTheDocument();
 
-        expect(screen.getByTestId('relevantGenres')).toBeInTheDocument();
+        expect(screen.getByTestId('genres')).toBeInTheDocument();
     });
 });

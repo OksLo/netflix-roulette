@@ -49,10 +49,10 @@ const MovieForm: FC<IMovieFormProps> = ({ movie, onSubmit }) => {
                 />
                 <Input
                     label="release date"
-                    name="releaseDate"
+                    name="release_date"
                     placeholder="Select date"
                     type="date"
-                    value={movieEntity.releaseDate}
+                    value={movieEntity.release_date}
                     onChange={handleMovieChange}
                 />
             </div>
@@ -66,38 +66,38 @@ const MovieForm: FC<IMovieFormProps> = ({ movie, onSubmit }) => {
                     onChange={handleMovieChange}/>
                 <Input
                     label="rating"
-                    name="rating"
+                    name="vote"
                     placeholder="Set rating"
                     type="number"
-                    value={movieEntity.rating}
+                    value={movieEntity.vote}
                     onChange={handleMovieChange}
                 />
             </div>
             <div className={styles['form-movie__row']}>
                 <Select
-                    value={movieEntity.relevantGenres}
+                    value={movieEntity.genres}
                     options={genresMock}
                     label="Genre"
-                    name="relevantGenres"
+                    name="genres"
                     placeholder="Select genre"
                     multiple
                     onChange={handleMovieGenresChange}/>
                 <Input
                     label="Runtime"
-                    name="duration"
+                    name="runtime"
                     placeholder="minutes"
                     type="number"
-                    value={movieEntity.duration}
+                    value={movieEntity.runtime}
                     onChange={handleMovieChange}
                 />
             </div>
             <div className={`${styles['form-movie__row']} ${styles['form-movie__row_full']}`}>
                 <Input
                     label="Overview"
-                    name="description"
+                    name="overview"
                     placeholder="Movie description"
                     type="textarea"
-                    value={movieEntity.description}
+                    value={movieEntity.overview}
                     onChange={handleMovieChange}
                 />
             </div>

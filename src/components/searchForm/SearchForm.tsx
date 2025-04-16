@@ -18,9 +18,7 @@ const SearchForm: FC<ISearchFormProps> = ({ initQuery = '', onSearch }) => {
 
   const handleSearchSubmit = (event: FormEvent<HTMLFormElement|HTMLInputElement>) => {
     event.preventDefault();
-    if (searchQuery) {
-      onSearch(searchQuery);
-    }
+    onSearch(searchQuery);
   }
 
   return (
