@@ -2,6 +2,7 @@ import { IMovie } from "../models/Movie.ts";
 
 export const moviesMock: IMovie[] = [
     {
+        id: 123,
         title: 'Reservoir dogs',
         url: '',
         poster_path: 'https://m.media-amazon.com/images/M/MV5BYjg4MmU3NWYtMWE5ZC00ZmNmLWIyZjItMGU4NmYxMjdmNzQ1XkEyXkFqcGc@._V1_.jpg',
@@ -12,5 +13,8 @@ export const moviesMock: IMovie[] = [
         vote: 7.6,
         vote_average: 7.8,
         vote_count: 156,
+        tagline: '',
+        budget: 1000000,
+        revenue: 10001000,
     }
 ]

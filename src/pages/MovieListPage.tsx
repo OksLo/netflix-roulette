@@ -1,6 +1,7 @@
 import { type FC, useState, useEffect } from 'react';
 import styles from './MovieListPage.module.scss';
 
+import Spinner from 'src/components/icons/Spinner.tsx';
 import SearchIcon from 'src/components/icons/SearchIcon.tsx';
 
 import GenreSelector from 'src/components/genreSelector/GenreSelector.tsx';
@@ -9,14 +10,17 @@ import SortControl from 'src/components/sortControl/SortControl.tsx'
 import MovieList from 'src/components/movieList/MovieList.tsx';
 import MovieDetails from 'src/components/movieDetails/MovieDetails.tsx';
 
+import { MOVIE_API_PATH } from 'src/constants/api';
+
 import { IMovie } from 'src/models/Movie.ts';
 
 // mocks
 import { genresMock, sortOptionsMock } from 'src/mocks/'
 
-const MOVIE_API_PATH = 'http://localhost:4000/movies'
 
 const MovieListPage: FC = () => {
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
     const [movies, setMovies] = useState<IMovie[]>([])
     const [searchQuery, setSearchQuery] = useState<string>('');
     const handleSearch = (query: string) => {
@@ -44,7 +48,7 @@ const MovieListPage: FC = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            // setLoading(true); // Start loading state
+            setIsLoading(true);
 
             try {
                 const searchParams = {
@@ -55,15 +59,15 @@ const MovieListPage: FC = () => {
                     filter: selectedGenre === 'all' ? '' : selectedGenre,
                     limit: '12',
                 }
-                // Replace this URL with the actual endpoint and pass sortParam if needed
+
                 const response = await fetch(`${MOVIE_API_PATH}?${new URLSearchParams(searchParams).toString()}`);
                 const result = await response.json();
 
-                setMovies(result.data); // Set the fetched data
+                setMovies(result.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             } finally {
-                // setLoading(false); // Stop loading state
+                setIsLoading(false);
             }
         };
 
@@ -91,8 +95,8 @@ const MovieListPage: FC = () => {
                 <GenreSelector genres={genres} selected={selectedGenre} onSelect={handleGenreChange} />
                 <SortControl options={sortOptionsMock} selectedOption={sortBy} onChange={handleSortChange}/>
             </div>
-            <MovieList movies={movies} onMovieSelect={handleMovieSelect}/>
-
+            {isLoading && <Spinner />}
+            {!isLoading && <MovieList movies={movies} onMovieSelect={handleMovieSelect}/>}
         </>
     )
 };
