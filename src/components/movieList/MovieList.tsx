@@ -1,4 +1,5 @@
 import { type FC } from 'react';
+import { Link } from "react-router-dom";
 import styles from './MovieList.module.scss';
 
 import MovieTile from 'src/components/movieTile/MovieTile.tsx';
@@ -19,7 +20,7 @@ const MovieList: FC<IMovieListProps> = ({ movies, onMovieSelect }) => {
                     className={styles['movie-list__item']}
                     onClick={() => onMovieSelect(movie)}
                 >
-                    <MovieTile movie={movie} />
+                    <Link to={`/${movie.id}`}><MovieTile movie={movie} /></Link>
                 </li>
             ))}
         </ul>

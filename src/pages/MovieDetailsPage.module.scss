@@ -1,0 +1,33 @@
+.movie-details-page {
+  position: relative;
+  margin-top: -80px;
+  padding: 80px 0 2rem;
+  display: flex;
+  align-items: stretch;
+  justify-items: stretch;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 100vw;
+    height: calc(100% - 10px);
+    transform: translate(-50%);
+    border-bottom: 10px solid rgba(136, 136, 136, .5);
+    background-color: var(--color-grey1);
+  }
+
+  &__card {
+    position: relative;
+    height: 100%;
+  }
+
+  &__btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    border: 0;
+    background-color: transparent;
+  }
+}

@@ -1,16 +1,7 @@
 .movie-list-page {
-  &__search {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+  &__outlet {
     margin-bottom: 10px;
-    padding: 0 10%;
-    height: 310px;
-
-    &-title {
-      font-size: 2em;
-      font-weight: 300;
-    }
+    min-height: 310px;
   }
 
   &__toolbar {
@@ -20,39 +11,5 @@
     margin-bottom: 1.5rem;
     border-bottom: 2px solid var(--color-grey2);
     box-shadow: 0 1px #080707;
-  }
-
-  &__details {
-    position: relative;
-    margin-top: -80px;
-    padding: 80px 0 2rem;
-    display: flex;
-    align-items: stretch;
-    justify-items: stretch;
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      width: 100vw;
-      height: calc(100% - 10px);
-      transform: translate(-50%);
-      border-bottom: 10px solid rgba(136, 136, 136, .5);
-      background-color: var(--color-grey1);
-    }
-
-    &-card {
-      position: relative;
-      height: 100%;
-    }
-
-    &-btn {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      border: 0;
-      background-color: transparent;
-    }
   }
 }
