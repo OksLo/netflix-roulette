@@ -8,9 +8,10 @@ import GenreSelector from 'src/components/genreSelector/GenreSelector.tsx';
 import SortControl from 'src/components/sortControl/SortControl.tsx';
 import MovieList from 'src/components/movieList/MovieList.tsx';
 
-import { MOVIE_API_PATH } from 'src/constants/api';
+import { SortOrder } from 'src/models/Api.ts';
+import { type IMovie } from 'src/models/Movie.ts';
 
-import { IMovie } from 'src/models/Movie.ts';
+import { getMovies } from 'src/utils/getData.ts';
 
 // mocks
 import { genresMock, sortOptionsMock } from 'src/mocks/'
@@ -27,16 +28,10 @@ const MovieListPage: FC = () => {
         }
         setSearchParams(updatedParams);
     }
-    console.log('[searchParams] order: ', searchParams.get('order'));
 
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const [movies, setMovies] = useState<IMovie[]>([])
-
-    const [selectedMovie, setSelectedMovie] = useState<IMovie | null>(null);
-    const handleMovieSelect = (movie: IMovie) => {
-        setSelectedMovie(movie);
-    }
 
     const [searchQuery, setSearchQuery] = useState<string>(searchParams.get('search') || '');
     const handleSearch = (query: string) => {
@@ -67,22 +62,21 @@ const MovieListPage: FC = () => {
             try {
                 const searchParams = {
                     sortBy,
-                    sortOrder: 'asc',
+                    sortOrder: SortOrder.ASC,
                     search: searchQuery,
                     searchBy: 'title',
                     filter: selectedGenre === 'all' ? '' : selectedGenre,
                     limit: '12',
                 };
-                const response = await fetch(`${MOVIE_API_PATH}?${new URLSearchParams(searchParams).toString()}`);
-                const result = await response.json();
+                const movies = await getMovies(searchParams);
 
-                setMovies(result.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
+                if (movies) {
+                    setMovies(movies);
+                }
             } finally {
                 setIsLoading(false);
             }
-        };
+        }
 
         fetchData();
     }, [searchQuery, selectedGenre, sortBy]);
@@ -92,23 +86,12 @@ const MovieListPage: FC = () => {
             <div className={styles['movie-list-page__outlet']}>
                 <Outlet />
             </div>
-            {/*selectedMovie &&
-                <div className={styles['movie-list-page__details']}>
-                    <button
-                        className={styles['movie-list-page__details-btn']}
-                        onClick={() => setSelectedMovie(null)}
-                    >
-                        <SearchIcon/>
-                    </button>
-                    <MovieDetails movie={selectedMovie} className={styles['movie-list-page__details-card']}/>
-                </div> */
-            }
             <div className={styles['movie-list-page__toolbar']}>
                 <GenreSelector genres={genres} selected={selectedGenre} onSelect={handleGenreChange} />
                 <SortControl options={sortOptionsMock} selectedOption={sortBy} onChange={handleSortChange}/>
             </div>
             {isLoading && <Spinner />}
-            {!isLoading && <MovieList movies={movies} onMovieSelect={handleMovieSelect}/>}
+            {!isLoading && <MovieList movies={movies}/>}
         </>
     )
 };

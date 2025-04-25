@@ -1,5 +1,5 @@
 import { type FC } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import styles from './MovieList.module.scss';
 
 import MovieTile from 'src/components/movieTile/MovieTile.tsx';
@@ -8,19 +8,20 @@ import { IMovie } from 'src/models/Movie.ts';
 
 interface IMovieListProps {
     movies: IMovie[];
-    onMovieSelect: (movie: IMovie) => void
 }
 
-const MovieList: FC<IMovieListProps> = ({ movies, onMovieSelect }) => {
+const MovieList: FC<IMovieListProps> = ({ movies }) => {
+    const [searchParams] = useSearchParams();
+    const queryParams = new URLSearchParams(searchParams);
 
     return (
         <ul className={styles['movie-list']}>
             {movies.map((movie, index) => (
                 <li key={index}
                     className={styles['movie-list__item']}
-                    onClick={() => onMovieSelect(movie)}
+                    data-testid="movie-list-item"
                 >
-                    <Link to={`/${movie.id}`}><MovieTile movie={movie} /></Link>
+                    <Link to={`/${movie.id}?${queryParams}`}><MovieTile movie={movie} /></Link>
                 </li>
             ))}
         </ul>
