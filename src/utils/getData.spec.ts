@@ -11,7 +11,7 @@ const mockFetch = fetch as jest.Mock;
 
 describe('getData utils', () => {
     afterEach(() => {
-        jest.clearAllMocks(); // Clear mocks after each test
+        jest.clearAllMocks();
     });
 
     describe('getMovies', () => {
@@ -22,7 +22,6 @@ describe('getData utils', () => {
         it('fetches movies successfully with search parameters', async () => {
             const mockSearchParams: ISearchParams = { filter: 'action', sortBy: 'rating' };
 
-            // Mock successful fetch response
             mockFetch.mockResolvedValueOnce({
                 ok: true,
                 json: async () => mockMoviesResponse,
@@ -41,7 +40,6 @@ describe('getData utils', () => {
         it('throws a FetchError when the response status is not ok', async () => {
             const mockSearchParams: ISearchParams = { filter: 'comedy' };
 
-            // Mock failing fetch response
             mockFetch.mockResolvedValueOnce({
                 ok: false,
                 status: 404,
@@ -57,14 +55,12 @@ describe('getData utils', () => {
         });
     });
 
-    // Test for getMovieById
     describe('getMovieById', () => {
         const mockMovieResponse: IMovie = moviesMock[0];
 
         it('fetches a single movie by ID successfully', async () => {
             const movieId = mockMovieResponse.id;
 
-            // Mock successful fetch response
             mockFetch.mockResolvedValueOnce({
                 ok: true,
                 json: async () => mockMovieResponse,
@@ -81,7 +77,6 @@ describe('getData utils', () => {
         it('throws a FetchError when the response for getMovieById is not ok', async () => {
             const movieId = '999';
 
-            // Mock failing fetch response
             mockFetch.mockResolvedValueOnce({
                 ok: false,
                 status: 404,
