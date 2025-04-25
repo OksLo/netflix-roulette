@@ -23,21 +23,22 @@ const SearchForm: FC<ISearchFormProps> = ({ initQuery = '', onSearch }) => {
 
   return (
     <form onSubmit={handleSearchSubmit} className={styles['search-form']}>
+      <legend className={styles['search-form__legend']}>Find your movie</legend>
       <input
-        type="search"
-        placeholder={placeholder}
-        value={searchQuery}
-        onChange={handleInputChange}
-        onFocus={handleSearchSubmit}
-        className={styles['search-form__input']}
-        data-testid="search-form-input"
+          type="search"
+          placeholder={placeholder}
+          value={searchQuery}
+          onChange={handleInputChange}
+          onFocus={handleSearchSubmit}
+          className={styles['search-form__input']}
+          data-testid="search-form-input"
       />
       <button
-        type="submit"
-        className={styles['search-form__btn']}
-        data-testid="search-form-button"
+          type="submit"
+          className={styles['search-form__btn']}
+          data-testid="search-form-button"
       >
-        search
+          search
       </button>
     </form>
   )

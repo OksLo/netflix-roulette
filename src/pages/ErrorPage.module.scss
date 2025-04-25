@@ -1,0 +1,15 @@
+.error-page {
+  margin: 0 auto;
+  padding: 2rem 0;
+  max-width: 1080px;
+  text-align: center;
+
+  &__status {
+    font-size: 4rem;
+  }
+
+  &__message {
+    margin-bottom: 3rem;
+    font-size: 1.25rem;
+  }
+}

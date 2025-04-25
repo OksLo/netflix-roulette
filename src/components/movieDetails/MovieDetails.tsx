@@ -20,7 +20,6 @@ const MovieDetails: FC<IMovieDetailsProps> = (
         runtime,
         overview } }
 ) => {
-
     const handleImgError = (event: SyntheticEvent<HTMLImageElement, Event>) => {
        event.target.src = ImagePlaceholder;
     }
