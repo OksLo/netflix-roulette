@@ -26,3 +26,35 @@ export const getMovieById = async (movieId: string): Promise<IMovie | undefined>
     }
     return await response.json();
 }
+
+export const addMovie = async (movie: IMovie) => {
+    const response = await fetch(`${MOVIE_API_PATH}`, {
+        method: "POST",
+        body: JSON.stringify(movie),
+    });
+    if (!response.ok) {
+        throw new FetchError(response);
+    }
+    return await response.json();
+}
+
+export const editMovie = async (movie: IMovie) => {
+    const response = await fetch(`${MOVIE_API_PATH}`, {
+        method: "PUT",
+        body: JSON.stringify(movie),
+    });
+    if (!response.ok) {
+        throw new FetchError(response);
+    }
+    return await response.json();
+}
+
+export const deleteMovie = async (movieId: string) => {
+    const response = await fetch(`${MOVIE_API_PATH}/${movieId}`, {
+        method: "DELETE",
+    });
+    if (!response.ok) {
+        throw new FetchError(response);
+    }
+    return await response.json();
+}
