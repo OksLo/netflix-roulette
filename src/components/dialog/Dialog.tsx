@@ -1,15 +1,24 @@
 import { type FC, ReactNode } from 'react';
 import { createPortal } from 'react-dom';
+import { useNavigate } from "react-router-dom";
 import styles from './Dialog.module.scss';
 
 
 interface IDialogProps {
-    onClose: () => void;
+    onClose?: () => void;
     children: ReactNode;
     title: string | ReactNode;
 }
 
 const Dialog: FC<IDialogProps> = ({ onClose, children, title }) => {
+    const navigate = useNavigate();
+
+    const handleCloseDialog = () => {
+        if (onClose) {
+            onClose();
+        }
+        navigate('/');
+    }
 
     return (
         <>
@@ -17,7 +26,7 @@ const Dialog: FC<IDialogProps> = ({ onClose, children, title }) => {
                 <dialog open className={styles.dialog}>
                     <div className={styles['dialog__window']}>
                         <button
-                            onClick={onClose}
+                            onClick={handleCloseDialog}
                             className={styles['dialog__btn-close']}
                         >✕</button>
                         <h2 className={styles['dialog__title']}>{title}</h2>

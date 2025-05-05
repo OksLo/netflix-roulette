@@ -6,7 +6,7 @@ import SearchIcon from 'src/components/icons/SearchIcon.tsx';
 import MovieDetails from "src/components/movieDetails/MovieDetails.tsx";
 import { IMovie } from "src/models/Movie.ts";
 
-import { getMovieById } from 'src/utils/getData.ts';
+import { getMovieById } from 'src/utils/movieApi.ts';
 
 export async function MovieLoader({ params }: { params: { movieId: string } }): Promise<IMovie | undefined> {
     const { movieId } = params;

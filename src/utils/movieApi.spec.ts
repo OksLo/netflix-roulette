@@ -1,4 +1,4 @@
-import { getMovies, getMovieById } from './getData.ts';
+import { getMovies, getMovieById } from './movieApi.ts';
 import { MOVIE_API_PATH } from 'src/constants/api';
 import { ISearchParams } from 'src/models/Api';
 import { IMovie } from 'src/models/Movie';

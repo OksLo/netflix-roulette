@@ -11,7 +11,7 @@ import MovieList from 'src/components/movieList/MovieList.tsx';
 import { SortOrder } from 'src/models/Api.ts';
 import { type IMovie } from 'src/models/Movie.ts';
 
-import { getMovies } from 'src/utils/getData.ts';
+import { getMovies } from 'src/utils/movieApi.ts';
 
 // mocks
 import { genresMock, sortOptionsMock } from 'src/mocks/'
