@@ -9,6 +9,25 @@ class FetchError extends Error {
     }
 }
 
+function removeEmptyFieldsImmutable(obj) {
+    return Object.entries(obj) // Convert object to an array of [key, value] pairs
+        .filter(([key, value]) => {
+            // Filter out empty fields
+            return !(
+                value === null ||
+                value === undefined ||
+                value === '' ||
+                (Array.isArray(value) && value.length === 0) ||
+                (typeof value === 'object' && Object.keys(value).length === 0)
+            );
+        })
+        .reduce((acc, [key, value]) => {
+            // Convert the filtered array back into an object
+            acc[key] = value;
+            return acc;
+        }, {});
+}
+
 export const getMovies =
     async (searchParams: ISearchParams): Promise<IMovie[] | undefined> => {
         const response = await fetch(`${MOVIE_API_PATH}?${new URLSearchParams(searchParams).toString()}`);
@@ -29,8 +48,11 @@ export const getMovieById = async (movieId: string): Promise<IMovie | undefined>
 
 export const addMovie = async (movie: IMovie) => {
     const response = await fetch(`${MOVIE_API_PATH}`, {
-        method: "POST",
-        body: JSON.stringify(movie),
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(removeEmptyFieldsImmutable(movie)),
     });
     if (!response.ok) {
         throw new FetchError(response);
@@ -40,7 +62,10 @@ export const addMovie = async (movie: IMovie) => {
 
 export const editMovie = async (movie: IMovie) => {
     const response = await fetch(`${MOVIE_API_PATH}`, {
-        method: "PUT",
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
         body: JSON.stringify(movie),
     });
     if (!response.ok) {

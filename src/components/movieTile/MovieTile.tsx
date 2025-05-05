@@ -1,4 +1,5 @@
 import {type FC, type SyntheticEvent, useState} from 'react';
+import { useNavigate } from "react-router-dom";
 import styles from './MovieTile.module.scss';
 
 import { IMovie } from 'src/models/Movie.ts'
@@ -8,15 +9,12 @@ interface IMovieTileProps {
     movie: IMovie;
 }
 
-const MovieTile: FC<IMovieTileProps> = ({ movie: {
-    title,
-    poster_path,
-    genres,
-    release_date
-} }) => {
-    const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
+const MovieTile: FC<IMovieTileProps> = ({ movie }) => {
+    const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+    const navigate = useNavigate();
 
-    const handleMenuToggle = (isOpen: boolean = !isMenuOpen) => {
+    const handleMenuToggle = (e, isOpen: boolean = !isMenuOpen) => {
+        e.stopPropagation();
         setIsMenuOpen(isOpen);
     }
 
@@ -24,32 +22,41 @@ const MovieTile: FC<IMovieTileProps> = ({ movie: {
         event.target.src = ImagePlaceholder;
     }
 
+    const handleMovieStartEdit = (e) => {
+        e.stopPropagation();
+
+        navigate(`/${movie.id}/edit`, { state: { movie } })
+    }
+
     return (
-        <figure className={styles['movie-tile']}>
-            <img
-                src={poster_path}
-                alt={title}
-                className={styles['movie-tile__img']}
-                onError={handleImgError}
-            />
-            <figcaption className={styles['movie-tile__caption']}>
-                <span className={styles['movie-tile__name']}>{ title }</span>
-                {genres && <span className={styles['movie-tile__genres']}>{genres.join(',')}</span>}
-                <span className={styles['movie-tile__year']}>{(new Date(release_date)).getFullYear()}</span>
-            </figcaption>
+        <div className={styles['movie-tile']}>
+            <figure>
+                <img
+                    src={movie.poster_path}
+                    alt={movie.title}
+                    className={styles['movie-tile__img']}
+                    onError={handleImgError}
+                />
+                <figcaption className={styles['movie-tile__caption']}>
+                    <span className={styles['movie-tile__name']}>{ movie.title }</span>
+                    {movie.genres && <span className={styles['movie-tile__genres']}>{movie.genres.join(',')}</span>}
+                    <span className={styles['movie-tile__year']}>{(new Date(movie.release_date)).getFullYear()}</span>
+                </figcaption>
+            </figure>
             <div className={styles['movie-tile__actions']}>
                 <button
                     className={styles['movie-tile__actions-btn']}
-                    onClick={() => handleMenuToggle(true)}
+                    onClick={(e) => handleMenuToggle(e, true)}
                     data-testid="movie-tile-menu-btn"
                 >⋮</button>
                 {isMenuOpen && <menu className={styles['movie-tile__actions-menu']} data-testid="movie-tile-menu">
-                    <li onClick={() => handleMenuToggle(false)}>✕</li>
-                    <li>Edit</li>
+                    <li onClick={(e) => handleMenuToggle(e, false)}>✕</li>
+                    <li onClick={handleMovieStartEdit}>Edit</li>
                     <li>Delete</li>
                 </menu>}
             </div>
-        </figure>
+        </div>
+
     )
 };
 

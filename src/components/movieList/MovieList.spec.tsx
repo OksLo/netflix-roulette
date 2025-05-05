@@ -1,51 +1,57 @@
-import React from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-
 import userEvent from '@testing-library/user-event';
+
 import MovieList from './MovieList';
 import { IMovie } from 'src/models/Movie';
 
 import { moviesMock } from "src/mocks";
 
-jest.mock('src/assets/imagePlaceholder.png', () => 'image-placeholder');
+jest.mock(
+    'src/components/movieTile/MovieTile',
+    () => jest.fn(() => <div data-testid="movie-tile">Movie Tile</div>)
+);
+
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: jest.fn(),
+    useSearchParams: jest.fn(),
+}));
 
 describe('MovieList Component', () => {
     const mockMovies: IMovie[] = moviesMock;
 
-    const renderWithRouter = (component: React.ReactNode) => {
-        return render(<BrowserRouter>{component}</BrowserRouter>);
-    };
+    const navigateMock = jest.fn();
+    const searchParams = 'sort=desc';
 
-    it('renders a list of movies', () => {
-        renderWithRouter(<MovieList movies={mockMovies} />);
+    beforeEach(() => {
+        jest.clearAllMocks();
+
+        (useNavigate as jest.Mock).mockReturnValue(navigateMock);
+        (useSearchParams as jest.Mock).mockReturnValue([new URLSearchParams(searchParams), jest.fn()]);
+    });
+
+    it('renders the correct number of movies', () => {
+        render(<MovieList movies={mockMovies} />);
 
         expect(screen.getAllByTestId('movie-list-item').length).toBe(mockMovies.length);
-        mockMovies.forEach((movie) => {
-            expect(screen.getByText(movie.title)).toBeInTheDocument();
-        });
     });
 
-    it('renders correctly with links leading to movie detail pages', () => {
-        renderWithRouter(<MovieList movies={mockMovies} />);
+    test('renders MovieTile for each movie', () => {
+        render(<MovieList movies={mockMovies} />);
 
-        mockMovies.forEach((movie) => {
-            const linkElement = screen.getByRole('link', { name: new RegExp(movie.title, 'i') });
-            expect(linkElement).toBeInTheDocument();
-            expect(linkElement).toHaveAttribute('href', `/${movie.id}`);
-        });
+        const movieTiles = screen.getAllByTestId('movie-tile');
+        expect(movieTiles).toHaveLength(mockMovies.length);
     });
 
-    it('handles user interactions with links', async () => {
-        renderWithRouter(<MovieList movies={mockMovies} />);
+    test('navigates to correct URL when a movie is clicked', async () => {
+        render(<MovieList movies={mockMovies} />);
 
-        const user = userEvent.setup();
+        const movieListItems = screen.getAllByTestId('movie-list-item');
 
-        const firstMovieLink = screen.getByRole('link', { name: new RegExp(mockMovies[0].title, 'i') });
+        await userEvent.click(movieListItems[0]);
 
-        await user.click(firstMovieLink);
-
-        expect(firstMovieLink).toBeInTheDocument();
-        expect(firstMovieLink).toHaveAttribute('href', `/${mockMovies[0].id}`);
+        expect(navigateMock).toHaveBeenCalledWith(`/${mockMovies[0].id}?${searchParams}`);
     });
 });
+

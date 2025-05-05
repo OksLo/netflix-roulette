@@ -2,7 +2,6 @@ import { IMovie } from "src/models/Movie.ts";
 
 export const MOVIE_DEFAULT: IMovie = {
     title: '',
-    url: '',
     poster_path: '',
     release_date: '',
     genres: [],

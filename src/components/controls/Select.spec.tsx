@@ -1,152 +1,122 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
 
-import Select from './Select';
+import Select, { type ISelectProps } from './Select';
+
+const mockProps = {
+    name: 'testSelect',
+    options: ['Option 1', 'Option 2', 'Option 3'],
+    label: 'Test Label',
+    placeholder: 'Select an option',
+};
 
 describe('Select Component', () => {
     const user = userEvent.setup();
-    const mockOnChange = jest.fn();
+
+    const validationSchema = Yup.object().shape({
+        testSelect: Yup.string().required('This field is required'),
+    });
+
+    const renderWithFormik = (
+        props: ISelectProps = mockProps,
+        initialValues: { testSelect: string | string[] } = { testSelect: '' }
+    ) =>
+        render(
+            <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={jest.fn()}
+            >
+                <Form>
+                    <Select {...props} />
+                </Form>
+            </Formik>
+        );
+
 
     afterEach(() => {
         jest.clearAllMocks();
     });
 
-    it('renders the select element with basic props', () => {
-        render(<Select value="" options={['Option 1', 'Option 2']} onChange={mockOnChange} />);
+    test('renders the Select component with label and options', () => {
+        renderWithFormik();
 
+        const label = screen.getByText(mockProps.label);
         const selectElement = screen.getByTestId('select-control');
+
+        expect(label).toBeInTheDocument();
         expect(selectElement).toBeInTheDocument();
-        expect(selectElement).toHaveValue('');
-        expect(selectElement).not.toBeDisabled();
-        expect(selectElement).not.toHaveAttribute('multiple');
+        mockProps.options.forEach((option) => {
+            expect(screen.getByRole('option', { name: option })).toBeInTheDocument();
+        });
     });
 
-    it('renders the label when label prop is provided', () => {
-        render(
-            <Select
-                value=""
-                options={['Option 1', 'Option 2']}
-                onChange={mockOnChange}
-                label="Select Example"
-                name="example-select"
-            />
-        );
+    test('renders placeholder when `multiple` is false', () => {
+        renderWithFormik();
 
-        const labelElement = screen.getByText('Select Example');
-        const selectElement = screen.getByTestId('select-control');
-        expect(labelElement).toBeInTheDocument();
-        expect(labelElement).toHaveAttribute('for', 'example-select');
-        expect(selectElement).toHaveAttribute('id', 'example-select');
+        const placeholderOption = screen.getByText(mockProps.placeholder);
+        expect(placeholderOption).toBeInTheDocument();
+        expect(placeholderOption).toHaveAttribute('value', '');
     });
 
-    it('triggers onChange with a single value when one option is selected', async () => {
-        render(
-            <Select
-                value=""
-                options={['Option 1', 'Option 2']}
-                onChange={mockOnChange}
-                name="example-select"
-            />
+    test('does not render placeholder when `multiple` is true', () => {
+        renderWithFormik(
+            { ...mockProps, multiple: true },
+            { testSelect: [''] }
         );
+
+        const placeholderOption = screen.queryByRole('option', {
+            name: mockProps.placeholder,
+        });
+        expect(placeholderOption).not.toBeInTheDocument();
+    });
+
+    test('handles value change for single selection', async () => {
+        renderWithFormik();
 
         const selectElement = screen.getByTestId('select-control');
         await user.selectOptions(selectElement, 'Option 2');
 
-        expect(mockOnChange).toHaveBeenCalledTimes(1);
-        expect(mockOnChange).toHaveBeenCalledWith('Option 2', 'example-select');
+        expect(selectElement).toHaveValue('Option 2');
     });
 
-    it('renders a placeholder option in single select mode', () => {
-        render(
-            <Select
-                value=""
-                options={['Option 1', 'Option 2']}
-                onChange={mockOnChange}
-                placeholder="Select an option..."
-            />
+    test('handles value change for multiple selections', async () => {
+        renderWithFormik(
+            { ...mockProps, multiple: true },
+            { testSelect: [''] }
         );
 
-        const placeholderOption = screen.getByText('Select an option...');
-        expect(placeholderOption).toBeInTheDocument();
-        expect(placeholderOption).toBeDisabled();
+        const selectElement = screen.getByTestId('select-control');
+        await user.selectOptions(selectElement, ['Option 1', 'Option 3']);
+
+        const selectedOptions = within(selectElement).getAllByRole('option', {
+            selected: true,
+        });
+
+        expect(selectedOptions.map((option) => option.value)).toEqual([
+            'Option 1',
+            'Option 3',
+        ]);
     });
 
-    it('does not render a placeholder option in multiple select mode', () => {
-        render(
-            <Select
-                multiple
-                value={[]}
-                options={['Option 1', 'Option 2']}
-                onChange={mockOnChange}
-                placeholder="Select an option..."
-            />
-        );
-
-        const placeholderOption = screen.queryByText('Select an option...');
-        expect(placeholderOption).not.toBeInTheDocument();
-    });
-
-    it('renders the select element as disabled when disabled=true', () => {
-        render(
-            <Select
-                value=""
-                options={['Option 1', 'Option 2']}
-                onChange={mockOnChange}
-                disabled
-            />
-        );
+    test('disables the select element when `disabled` is true', () => {
+        renderWithFormik({ ...mockProps, disabled: true });
 
         const selectElement = screen.getByTestId('select-control');
         expect(selectElement).toBeDisabled();
     });
 
-    it('renders the select element with the required attribute when required=true', () => {
-        render(
-            <Select
-                value=""
-                options={['Option 1', 'Option 2']}
-                onChange={mockOnChange}
-                required
-            />
-        );
+    test('displays error message when field has validation error', async () => {
+        renderWithFormik();
 
         const selectElement = screen.getByTestId('select-control');
-        expect(selectElement).toBeRequired();
-    });
 
-    it('renders the error message and applies error styles when error prop is provided', () => {
-        render(
-            <Select
-                value=""
-                options={['Option 1', 'Option 2']}
-                onChange={mockOnChange}
-                error="An error occurred"
-            />
-        );
+        await userEvent.click(selectElement);
+        await userEvent.tab();
 
-        const errorMessage = screen.getByText('An error occurred');
+        const errorMessage = await screen.findByText(/this field is required/i);
         expect(errorMessage).toBeInTheDocument();
-    });
-
-    it('renders with the preselected value in single select mode', () => {
-        render(<Select value="Option 2" options={['Option 1', 'Option 2']} onChange={mockOnChange} />);
-
-        const selectElement = screen.getByTestId('select-control');
-        expect(selectElement).toHaveValue('Option 2');
-    });
-
-    it('renders with preselected values in multiple select mode', () => {
-        render(
-            <Select
-                multiple
-                value={['Option 1', 'Option 3']}
-                options={['Option 1', 'Option 2', 'Option 3']}
-                onChange={mockOnChange}
-            />
-        );
-
-        const selectElement = screen.getByTestId('select-control');
-        const selectedOptions = Array.from(selectElement.selectedOptions).map((option) => option.value);
-        expect(selectedOptions).toEqual(['Option 1', 'Option 3']);
     });
 });

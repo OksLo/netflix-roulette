@@ -1,5 +1,4 @@
 import { type FC } from 'react';
-// import styles from './MovieFormAdd.module.scss';
 
 import Dialog from 'src/components/dialog/Dialog.tsx';
 import MovieForm from 'src/components/movieForm/MovieForm.tsx';

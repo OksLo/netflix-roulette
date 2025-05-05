@@ -19,4 +19,12 @@
       color: var(--color-grey3);
     }
   }
+
+  &__error {
+    font-size: .75em;
+  }
+
+  &_invalid {
+    border-color: var(--color-pink);
+  }
 }

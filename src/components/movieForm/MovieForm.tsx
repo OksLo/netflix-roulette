@@ -1,12 +1,13 @@
-import { type ChangeEvent, type FormEvent, type FC, useState} from 'react';
-import { useFormik } from 'formik';
+import { type FC} from 'react';
+import { useNavigate } from "react-router-dom";
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import styles from './MovieForm.module.scss';
 
 import Input from "src/components/controls/Input.tsx";
 import Select from "src/components/controls/Select.tsx";
 
-import {MOVIE_DEFAULT} from "src/constants/movie.ts";
+import { MOVIE_DEFAULT } from "src/constants/movie.ts";
 
 import { IMovie } from "src/models/Movie.ts";
 
@@ -14,118 +15,91 @@ import { genresMock } from 'src/mocks'
 
 interface IMovieFormProps {
     movie?: IMovie;
-    onSubmit: (movie: IMovie) => void;
+    onSubmit: (movie: IMovie) => Promise<IMovie>;
 }
 
 const MovieForm: FC<IMovieFormProps> = ({ movie = MOVIE_DEFAULT, onSubmit }) => {
-    const formik = useFormik({
-        initialValues: movie,
-        validationSchema: Yup.object({
-            title: Yup.string()
-                .required('Required'),
-            // lastName: Yup.string()
-            //     .max(20, 'Must be 20 characters or less')
-            //     .required('Required'),
-            // email: Yup.string().email('Invalid email address').required('Required'),
-        }),
-        onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
-            // onSubmit(values);
-        },
-    });
-
-    // const [movieEntity, setMovieEntity] = useState<IMovie>(movie)
-
-    // const handleMovieChange = (
-    //     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    // ) => {
-    //     const key = event.target.name;
-    //     const value = event.target.value;
-    //
-    //     setMovieEntity({...movieEntity, ...{ [key]: value } })
-    // }
-    //
-    // const handleMovieGenresChange = (value: string | string[], key: string) => {
-    //     setMovieEntity({...movieEntity, ...{ [key]: value } })
-    // }
-    //
-    // const handleMovieReset = () => {
-    //     setMovieEntity(movie);
-    // }
-    //
-    // const handleFormSubmit = (event: FormEvent) => {
-    //     event.preventDefault();
-    //     onSubmit(movieEntity);
-    // }
+    const navigate = useNavigate();
 
     return (
-        <form id="form-movie" className={styles['form-movie']} onSubmit={formik.handleSubmit}>
-            <div className={styles['form-movie__row']}>
-                <Input
-                    label="title"
-                    name="title"
-                    value={formik.values.title}
-                    onChange={formik.handleChange}
-                />
-                <Input
-                    label="release date"
-                    name="release_date"
-                    placeholder="Select date"
-                    type="date"
-                    value={formik.values.release_date}
-                    onChange={formik.handleChange}
-                />
-            </div>
-            <div className={styles['form-movie__row']}>
-                <Input
-                    label="movie url"
-                    name="url"
-                    type="url"
-                    placeholder="https://"
-                    value={formik.values.url}
-                    onChange={formik.handleChange}/>
-                <Input
-                    label="rating"
-                    name="vote"
-                    placeholder="Set rating"
-                    type="number"
-                    value={formik.values.vote}
-                    onChange={formik.handleChange}
-                />
-            </div>
-            <div className={styles['form-movie__row']}>
-                <Select
-                    value={formik.values.genres}
-                    options={genresMock}
-                    label="Genre"
-                    name="genres"
-                    placeholder="Select genre"
-                    multiple
-                    onChange={formik.handleChange}/>
-                <Input
-                    label="Runtime"
-                    name="runtime"
-                    placeholder="minutes"
-                    type="number"
-                    value={formik.values.runtime}
-                    onChange={formik.handleChange}
-                />
-            </div>
-            <div className={`${styles['form-movie__row']} ${styles['form-movie__row_full']}`}>
-                <Input
-                    label="Overview"
-                    name="overview"
-                    placeholder="Movie description"
-                    type="textarea"
-                    value={formik.values.overview}
-                    onChange={formik.handleChange}
-                />
-            </div>
-            <div className={`${styles['form-movie__row']} ${styles['form-movie__row_actions']}`}>
-                <button type="reset" onClick={formik.resetForm} className="secondary">Reset</button>
-                <button type="submit">submit</button>
-            </div>
-        </form>
+        <Formik
+            initialValues={movie}
+            validationSchema={Yup.object({
+                title: Yup.string()
+                    .required('Required field'),
+                release_date: Yup.date().required('Required field'),
+                poster_path: Yup.string().url('Invalid poster path').required('Required field'),
+                vote: Yup.number().positive().integer(),
+                runtime: Yup.number().required('Required field').positive().integer(),
+                overview: Yup.string().required('Required field'),
+            })}
+            onSubmit={async (values) => {
+                const result = await onSubmit(values);
+                if (result.id) {
+                    navigate(`/${result.id}`);
+                } else {
+                    navigate('/');
+                }
+            }}
+        >
+
+                <Form id="form-movie" className={styles['form-movie']} >
+                    <div className={styles['form-movie__row']}>
+                        <Input
+                            label="title"
+                            name="title"
+                        />
+                        <Input
+                            label="release date"
+                            name="release_date"
+                            placeholder="Select date"
+                            type="date"
+                        />
+                    </div>
+                    <div className={styles['form-movie__row']}>
+                        <Input
+                            label="poster path"
+                            name="poster_path"
+                            type="url"
+                            placeholder="https://"
+                        />
+                        <Input
+                            label="rating"
+                            name="vote"
+                            placeholder="Set rating"
+                            type="number"
+                        />
+                    </div>
+                    <div className={styles['form-movie__row']}>
+                        <Select
+                            options={genresMock}
+                            label="Genre"
+                            name="genres"
+                            placeholder="Select genre"
+                            multiple
+                        />
+                        <Input
+                            label="Runtime"
+                            name="runtime"
+                            placeholder="minutes"
+                            type="number"
+                        />
+                    </div>
+                    <div className={`${styles['form-movie__row']} ${styles['form-movie__row_full']}`}>
+                        <Input
+                            label="Overview"
+                            name="overview"
+                            placeholder="Movie description"
+                            type="textarea"
+                        />
+                    </div>
+                    <div className={`${styles['form-movie__row']} ${styles['form-movie__row_actions']}`}>
+                        <button type="reset" className="secondary">Reset</button>
+                        <button type="submit">submit</button>
+                    </div>
+                </Form>
+
+        </Formik>
     )
 };
 
