@@ -2,9 +2,9 @@ import { type FC, type ChangeEvent, type FormEvent, useState } from 'react';
 import { Outlet } from "react-router-dom";
 import styles from './SearchForm.module.scss';
 
-interface ISearchFormProps {
+export interface ISearchFormProps {
   initQuery?: string;
-  onSearch: (query: string) => void;
+  onSearch?: (query: string) => void;
 }
 
 const SearchForm: FC<ISearchFormProps> = ({ initQuery = '', onSearch }) => {
@@ -19,7 +19,7 @@ const SearchForm: FC<ISearchFormProps> = ({ initQuery = '', onSearch }) => {
 
   const handleSearchSubmit = (event: FormEvent<HTMLFormElement|HTMLInputElement>) => {
     event.preventDefault();
-    onSearch(searchQuery);
+    onSearch?.(searchQuery);
   }
 
   return (

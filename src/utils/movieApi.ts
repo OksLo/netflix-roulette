@@ -3,26 +3,25 @@ import { IMovie } from "src/models/Movie.ts";
 import { MOVIE_API_PATH } from "src/constants/api.ts";
 
 class FetchError extends Error {
-    constructor({ status, statusText }) {
+    status: number;
+    constructor({ status, statusText }: { status: number; statusText: string }) {
         super(statusText);
         this.status = status;
     }
 }
 
-function removeEmptyFieldsImmutable(obj) {
-    return Object.entries(obj) // Convert object to an array of [key, value] pairs
-        .filter(([key, value]) => {
-            // Filter out empty fields
+function removeEmptyFieldsImmutable(obj: Record<string, unknown>): Record<string, unknown> {
+    return Object.entries(obj)
+        .filter(([, value]) => {
             return !(
                 value === null ||
                 value === undefined ||
                 value === '' ||
                 (Array.isArray(value) && value.length === 0) ||
-                (typeof value === 'object' && Object.keys(value).length === 0)
+                (typeof value === 'object' && Object.keys(value as object).length === 0)
             );
         })
-        .reduce((acc, [key, value]) => {
-            // Convert the filtered array back into an object
+        .reduce((acc: Record<string, unknown>, [key, value]) => {
             acc[key] = value;
             return acc;
         }, {});
@@ -30,7 +29,7 @@ function removeEmptyFieldsImmutable(obj) {
 
 export const getMovies =
     async (searchParams: ISearchParams): Promise<IMovie[] | undefined> => {
-        const response = await fetch(`${MOVIE_API_PATH}?${new URLSearchParams(searchParams).toString()}`);
+        const response = await fetch(`${MOVIE_API_PATH}?${new URLSearchParams(searchParams as Record<string, string>).toString()}`);
         if (!response.ok) {
             throw new FetchError(response);
         }
@@ -52,7 +51,7 @@ export const addMovie = async (movie: IMovie) => {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(removeEmptyFieldsImmutable(movie)),
+        body: JSON.stringify(removeEmptyFieldsImmutable(movie as unknown as Record<string, unknown>)),
     });
     if (!response.ok) {
         throw new FetchError(response);

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styles from './Dialog.module.scss';
 
 
-interface IDialogProps {
+export interface IDialogProps {
     onClose?: () => void;
     children: ReactNode;
     title: string | ReactNode;

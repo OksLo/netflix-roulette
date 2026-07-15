@@ -95,7 +95,7 @@ describe('Select Component', () => {
             selected: true,
         });
 
-        expect(selectedOptions.map((option) => option.value)).toEqual([
+        expect(selectedOptions.map((option) => (option as HTMLOptionElement).value)).toEqual([
             'Option 1',
             'Option 3',
         ]);

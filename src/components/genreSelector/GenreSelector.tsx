@@ -1,7 +1,7 @@
 import { type FC, useState } from 'react';
 import styles from './GenreSelector.module.scss';
 
-interface IGenreSelectorProps {
+export interface IGenreSelectorProps {
   genres: string[];
   selected?: string;
   onSelect: (genre: string) => void;

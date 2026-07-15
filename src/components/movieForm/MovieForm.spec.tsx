@@ -50,8 +50,8 @@ describe('MovieForm Component', () => {
         const genresSelect = screen.getByLabelText(/genre/i);
         await userEvent.selectOptions(genresSelect, [genresMock[0], genresMock[1]]);
 
-        expect(screen.getByRole('option', { name: genresMock[0] }).selected).toBe(true);
-        expect(screen.getByRole('option', { name: genresMock[1] }).selected).toBe(true);
+        expect((screen.getByRole('option', { name: genresMock[0] }) as HTMLOptionElement).selected).toBe(true);
+        expect((screen.getByRole('option', { name: genresMock[1] }) as HTMLOptionElement).selected).toBe(true);
     });
 
     it('resets the form when the reset button is clicked', async () => {

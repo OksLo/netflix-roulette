@@ -13,7 +13,7 @@ import { IMovie } from "src/models/Movie.ts";
 
 import { genresMock } from 'src/mocks'
 
-interface IMovieFormProps {
+export interface IMovieFormProps {
     movie?: IMovie;
     onSubmit: (movie: IMovie) => Promise<IMovie>;
 }

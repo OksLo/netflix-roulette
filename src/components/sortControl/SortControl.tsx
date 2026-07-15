@@ -3,7 +3,7 @@ import styles from './SortControl.module.scss';
 
 import { IOption } from 'src/models/Controls.ts'
 
-interface ISortControlProps {
+export interface ISortControlProps {
     options: IOption[];
     selectedOption: string;
     onChange: (selected: string) => void;

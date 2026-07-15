@@ -11,10 +11,10 @@ const Spinner: FC = () => {
                 <stop offset='.8' stopColor='#FF156D' stopOpacity='.3'></stop><
                 stop offset='1' stopColor='#FF156D' stopOpacity='0'></stop>
             </radialGradient>
-            <circle transformOrigin='center' fill='none' stroke='url(#a1)' strokeWidth='15' strokeLinecap='round' strokeDasharray='200 1000' strokeDashoffset='0' cx='100' cy='100' r='70'>
+            <circle style={{ transformOrigin: 'center' }} fill='none' stroke='url(#a1)' strokeWidth='15' strokeLinecap='round' strokeDasharray='200 1000' strokeDashoffset='0' cx='100' cy='100' r='70'>
                 <animateTransform type='rotate' attributeName='transform' calcMode='spline' dur='2' values='360;0' keyTimes='0;1' keySplines='0 0 1 1' repeatCount='indefinite'></animateTransform>
             </circle>
-            <circle transformOrigin='center' fill='none' opacity='.2' stroke='#FF156D' strokeWidth='15' strokeLinecap='round' cx='100' cy='100' r='70'></circle>
+            <circle style={{ transformOrigin: 'center' }} fill='none' opacity='.2' stroke='#FF156D' strokeWidth='15' strokeLinecap='round' cx='100' cy='100' r='70'></circle>
         </svg>
     )
 };

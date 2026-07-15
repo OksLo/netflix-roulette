@@ -30,7 +30,7 @@ describe('getData utils', () => {
             const result = await getMovies(mockSearchParams);
 
             expect(fetch).toHaveBeenCalledWith(
-                `${MOVIE_API_PATH}?${new URLSearchParams(mockSearchParams).toString()}`
+                `${MOVIE_API_PATH}?${new URLSearchParams(mockSearchParams as Record<string, string>).toString()}`
             );
             expect(fetch).toHaveBeenCalledTimes(1);
 
@@ -46,10 +46,10 @@ describe('getData utils', () => {
                 statusText: 'Not Found',
             });
 
-            await expect(getMovies(mockSearchParams)).rejects.toThrowError('Not Found');
+            await expect(getMovies(mockSearchParams)).rejects.toThrow('Not Found');
 
             expect(fetch).toHaveBeenCalledWith(
-                `${MOVIE_API_PATH}?${new URLSearchParams(mockSearchParams).toString()}`
+                `${MOVIE_API_PATH}?${new URLSearchParams(mockSearchParams as Record<string, string>).toString()}`
             );
             expect(fetch).toHaveBeenCalledTimes(1);
         });
@@ -59,7 +59,7 @@ describe('getData utils', () => {
         const mockMovieResponse: IMovie = moviesMock[0];
 
         it('fetches a single movie by ID successfully', async () => {
-            const movieId = mockMovieResponse.id;
+            const movieId = String(mockMovieResponse.id);
 
             mockFetch.mockResolvedValueOnce({
                 ok: true,
@@ -83,7 +83,7 @@ describe('getData utils', () => {
                 statusText: 'Not Found',
             });
 
-            await expect(getMovieById(movieId)).rejects.toThrowError('Not Found');
+            await expect(getMovieById(movieId)).rejects.toThrow('Not Found');
 
             expect(fetch).toHaveBeenCalledWith(`${MOVIE_API_PATH}/${movieId}`);
             expect(fetch).toHaveBeenCalledTimes(1);

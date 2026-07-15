@@ -1,11 +1,11 @@
-import {type FC, type SyntheticEvent, useState} from 'react';
+import {type FC, type SyntheticEvent, useState, type MouseEvent} from 'react';
 import { useNavigate } from "react-router-dom";
 import styles from './MovieTile.module.scss';
 
 import { IMovie } from 'src/models/Movie.ts'
 import ImagePlaceholder from "src/assets/imagePlaceholder.png";
 
-interface IMovieTileProps {
+export interface IMovieTileProps {
     movie: IMovie;
 }
 
@@ -13,16 +13,16 @@ const MovieTile: FC<IMovieTileProps> = ({ movie }) => {
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     const navigate = useNavigate();
 
-    const handleMenuToggle = (e, isOpen: boolean = !isMenuOpen) => {
+    const handleMenuToggle = (e: MouseEvent, isOpen: boolean = !isMenuOpen) => {
         e.stopPropagation();
         setIsMenuOpen(isOpen);
     }
 
     const handleImgError = (event: SyntheticEvent<HTMLImageElement, Event>) => {
-        event.target.src = ImagePlaceholder;
+        event.currentTarget.src = ImagePlaceholder;
     }
 
-    const handleMovieStartEdit = (e) => {
+    const handleMovieStartEdit = (e: MouseEvent) => {
         e.stopPropagation();
 
         navigate(`/${movie.id}/edit`, { state: { movie } })

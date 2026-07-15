@@ -30,7 +30,7 @@ describe('MovieDetailsPage', () => {
     const searchParams = 'filter=action&sortBy=rating';
 
     beforeEach(() => {
-        mockedUseSearchParams.mockReturnValue([new URLSearchParams(searchParams)]);
+        mockedUseSearchParams.mockReturnValue([new URLSearchParams(searchParams), jest.fn()]);
     });
 
     afterEach(() => {

@@ -3,7 +3,7 @@ import { Link, useRouteError } from "react-router-dom";
 import styles from './ErrorPage.module.scss';
 
 const ErrorPage: FC = () => {
-    const error = useRouteError();
+    const error = useRouteError() as { status?: number; statusText?: string; message?: string };
 
     return (
         <div className={styles['error-page']}>

@@ -1,5 +1,5 @@
 import { type FC } from 'react';
-import {Link, useLoaderData, useSearchParams} from "react-router-dom";
+import { Link, useLoaderData, useSearchParams, type LoaderFunctionArgs } from "react-router-dom";
 import styles from './MovieDetailsPage.module.scss';
 
 import SearchIcon from 'src/components/icons/SearchIcon.tsx';
@@ -8,9 +8,9 @@ import { IMovie } from "src/models/Movie.ts";
 
 import { getMovieById } from 'src/utils/movieApi.ts';
 
-export async function MovieLoader({ params }: { params: { movieId: string } }): Promise<IMovie | undefined> {
+export async function MovieLoader({ params }: LoaderFunctionArgs): Promise<IMovie | undefined> {
     const { movieId } = params;
-
+    if (!movieId) return undefined;
     return await getMovieById(movieId);
 }
 

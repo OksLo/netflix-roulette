@@ -21,7 +21,7 @@ describe('Input Component', () => {
 
     const renderInput = (
         props: IInputProps = inputProps,
-        formikData= { touched: false, error: undefined }
+        formikData: { touched: boolean; error?: string } = { touched: false }
     ) => {
         useFieldMock.mockReturnValue([
             { name: inputProps.name, value: '', onChange: onChangeMock, onBlur: onBlurMock },

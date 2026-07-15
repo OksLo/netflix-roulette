@@ -15,21 +15,21 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    movie: {},
-    onSubmit: () => {}
+    movie: MOVIE_DEFAULT,
+    onSubmit: async () => ({} as never)
   }
 };
 
 export const AddMovie: Story = {
   args: {
     movie: MOVIE_DEFAULT,
-    onSubmit: () => {}
+    onSubmit: async () => ({} as never)
   }
 };
 
 export const EditMovie: Story = {
   args: {
     movie: moviesMock[0],
-    onSubmit: () => {}
+    onSubmit: async () => ({} as never)
   }
 };

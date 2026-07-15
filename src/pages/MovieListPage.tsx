@@ -33,13 +33,6 @@ const MovieListPage: FC = () => {
 
     const [movies, setMovies] = useState<IMovie[]>([])
 
-    const [searchQuery, setSearchQuery] = useState<string>(searchParams.get('search') || '');
-    const handleSearch = (query: string) => {
-      setSearchQuery(query);
-      updateSearchParams('search', query);
-      console.log('[handleSearch] query: ', query)
-    }
-
     const genres = genresMock;
     const [selectedGenre, setSelectedGenre] = useState<string>(searchParams.get('genre') || genres[0])
     const handleGenreChange = (newGenre: string) => {
@@ -60,15 +53,15 @@ const MovieListPage: FC = () => {
             setIsLoading(true);
 
             try {
-                const searchParams = {
+                const fetchParams = {
                     sortBy,
                     sortOrder: SortOrder.ASC,
-                    search: searchQuery,
+                    search: searchParams.get('search') || '',
                     searchBy: 'title',
                     filter: selectedGenre === 'all' ? '' : selectedGenre,
                     limit: '12',
                 };
-                const movies = await getMovies(searchParams);
+                const movies = await getMovies(fetchParams);
 
                 if (movies) {
                     setMovies(movies);
@@ -79,7 +72,7 @@ const MovieListPage: FC = () => {
         }
 
         fetchData();
-    }, [searchQuery, selectedGenre, sortBy]);
+    }, [searchParams, selectedGenre, sortBy]);
 
     return (
         <>

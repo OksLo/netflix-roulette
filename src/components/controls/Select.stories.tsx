@@ -14,63 +14,51 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    value: genresMock[0],
+    name: 'genres',
     options: genresMock,
-    onChange: () => {}
   }
 };
 
 export const WithLabel: Story = {
   args: {
-    value: '',
     options: genresMock,
     name: 'genres',
     label: 'Select genre',
-    onChange: () => {}
   }
 };
 
 export const WithPlaceholder: Story = {
   args: {
-    value: '',
     options: genresMock,
     name: 'genres',
     label: 'Select genre',
     placeholder: 'Select genre',
-    onChange: () => {}
   }
 };
 
 export const Disabled: Story = {
   args: {
-    value: '',
     options: genresMock,
     name: 'genres',
     label: 'Select genre',
     placeholder: 'Select genre',
     disabled: true,
-    onChange: () => {}
   }
 };
 
 export const Multiple: Story = {
   args: {
-    value: '',
     options: genresMock,
     name: 'genres',
     label: 'Select genre',
     multiple: true,
-    onChange: () => {}
   }
 };
 
 export const WithError: Story = {
   args: {
-    value: genresMock[0],
     options: genresMock,
     name: 'genres',
     label: 'Select genre',
-    error: 'Something is wrong',
-    onChange: () => {}
   }
 };
