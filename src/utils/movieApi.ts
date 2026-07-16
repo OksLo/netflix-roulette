@@ -29,12 +29,16 @@ function removeEmptyFieldsImmutable(obj: Record<string, unknown>): Record<string
 
 export const getMovies =
     async (searchParams: ISearchParams): Promise<IMovie[] | undefined> => {
-        const response = await fetch(`${MOVIE_API_PATH}?${new URLSearchParams(searchParams as Record<string, string>).toString()}`);
-        if (!response.ok) {
-            throw new FetchError(response);
+        try {
+            const response = await fetch(`${MOVIE_API_PATH}?${new URLSearchParams(searchParams as Record<string, string>).toString()}`);
+            if (!response.ok) {
+                throw new FetchError(response);
+            }
+            const result = await response.json();
+            return result.data;
+        } catch (e) {
+            throw new Error("Failed to fetch resource", { cause: e });
         }
-        const result = await response.json();
-        return result.data;
 }
 
 export const getMovieById = async (movieId: string): Promise<IMovie | undefined> => {

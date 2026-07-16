@@ -30,6 +30,7 @@ const MovieListPage: FC = () => {
     }
 
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [errorMessage, setErrorMessage] = useState<string>('');
 
     const [movies, setMovies] = useState<IMovie[]>([])
 
@@ -38,14 +39,12 @@ const MovieListPage: FC = () => {
     const handleGenreChange = (newGenre: string) => {
       setSelectedGenre(newGenre);
       updateSearchParams('genre', newGenre);
-      console.log('[handleGenreChange] newGenre: ', newGenre);
     }
 
     const [sortBy, setSortBy] = useState<string>(searchParams.get('sortBy') ?? sortOptionsMock[0].value);
     const handleSortChange = (newSortOption: string) => {
       setSortBy(newSortOption);
       updateSearchParams('sortBy', newSortOption);
-      console.log('[handleSortChange] newSortOption: ', newSortOption)
     }
 
     useEffect(() => {
@@ -66,7 +65,10 @@ const MovieListPage: FC = () => {
                 if (movies) {
                     setMovies(movies);
                 }
-            } finally {
+            } catch (e) {
+                setErrorMessage(e instanceof Error ? e.message : String(e));
+            }
+            finally {
                 setIsLoading(false);
             }
         }
@@ -83,8 +85,9 @@ const MovieListPage: FC = () => {
                 <GenreSelector genres={genres} selected={selectedGenre} onSelect={handleGenreChange} />
                 <SortControl options={sortOptionsMock} selectedOption={sortBy} onChange={handleSortChange}/>
             </div>
-            {isLoading && <Spinner />}
-            {!isLoading && <MovieList movies={movies}/>}
+            {isLoading && <div className={styles['movie-list-page__spinner']}><Spinner /></div>}
+            {!isLoading && !errorMessage && <MovieList movies={movies}/>}
+            {!isLoading && errorMessage && <div>{ errorMessage }</div>}
         </>
     )
 };

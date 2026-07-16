@@ -1,4 +1,7 @@
 .input {
+  position: relative;
+  padding-bottom: 1.2em;
+
   &__label {
     display: block;
     text-transform: uppercase;
@@ -23,6 +26,8 @@
   }
 
   &__error {
+    position: absolute;
+    bottom: 0;
     font-size: .75em;
   }
 

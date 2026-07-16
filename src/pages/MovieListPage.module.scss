@@ -8,8 +8,16 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 3rem;
     margin-bottom: 1.5rem;
     border-bottom: 2px solid var(--color-grey2);
     box-shadow: 0 1px #080707;
+  }
+
+  &__spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10rem;
   }
 }

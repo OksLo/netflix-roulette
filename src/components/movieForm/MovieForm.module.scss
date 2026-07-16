@@ -2,6 +2,7 @@
   display: grid;
   gap: 1.875em 1.875em;;
   grid-template-columns: 2fr 1fr;
+  align-items: start;
 
   &__row {
     display: contents;

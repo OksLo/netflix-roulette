@@ -16,7 +16,6 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
         children: [
             {
-                path: '/',
                 element: <MovieListPage />,
                 children: [
                     {
@@ -42,7 +41,7 @@ const router = createBrowserRouter([
             }
         ]
     }
-]);
+], { basename: '/netflix-roulette' });
 
 
 function App() {

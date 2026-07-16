@@ -3,7 +3,7 @@ import { type FC } from 'react';
 const Spinner: FC = () => {
 
     return (
-        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'>
+        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' style={{maxHeight: '100%', maxWidth: '100%'}}>
             <radialGradient id='a1' cx='.66' fx='.66' cy='.3125' fy='.3125' gradientTransform='scale(1.5)'>
                 <stop offset='0' stopColor='#FF156D'></stop>
                 <stop offset='.3' stopColor='#FF156D' stopOpacity='.9'></stop>
